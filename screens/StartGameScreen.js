@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { TextInput, View, StyleSheet, Alert, Text } from "react-native";
+import ButtonWrapper from "../components/ui/ButtonWrapper";
+import Card from "../components/ui/Card";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
 
@@ -32,7 +34,7 @@ const StartGameScreen = ({ onPickNumber, changeGameState }) => {
 			<View style={styles.title}>
 				<Text style={styles.text}>Guess The Number</Text>
 			</View>
-			<View style={styles.inputContainer}>
+			<Card>
 				<Text style={styles.text}>Enter a Number</Text>
 				<TextInput
 					maxLength={2}
@@ -44,7 +46,7 @@ const StartGameScreen = ({ onPickNumber, changeGameState }) => {
 					style={styles.numberInput}
 					onChangeText={handleChange}
 				/>
-				<View style={styles.buttonsContainer}>
+				<ButtonWrapper>
 					<View style={styles.buttonContainer}>
 						<PrimaryButton onPressHandler={handleReset}>Reset</PrimaryButton>
 					</View>
@@ -53,8 +55,8 @@ const StartGameScreen = ({ onPickNumber, changeGameState }) => {
 							Confirm
 						</PrimaryButton>
 					</View>
-				</View>
-			</View>
+				</ButtonWrapper>
+			</Card>
 		</>
 	);
 };
@@ -97,12 +99,6 @@ const styles = StyleSheet.create({
 		marginVertical: 8,
 		fontWeight: "bold",
 		textAlign: "center",
-	},
-	buttonsContainer: {
-		display: "flex",
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "center",
 	},
 	buttonContainer: {
 		flex: 1,

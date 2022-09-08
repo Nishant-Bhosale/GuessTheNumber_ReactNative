@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Alert } from "react-native";
 import NumberContainer from "../components/game/NumberContainer";
+import ButtonWrapper from "../components/ui/ButtonWrapper";
+import { Ionicons } from "@expo/vector-icons";
+import Card from "../components/ui/Card";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
 
@@ -56,45 +59,30 @@ const GameScreen = ({ enteredNum, changeGameState }) => {
 		<>
 			<Title>Opponent's Guess</Title>
 			<NumberContainer>{currentGuess}</NumberContainer>
-			<View style={styles.inputContainer}>
+			<Card>
 				<Text style={styles.highlow}>Higher or Lower?</Text>
-				<View style={styles.buttonsContainer}>
+				<ButtonWrapper>
 					<View style={styles.buttonContainer}>
 						<PrimaryButton
 							onPressHandler={nextGuessHandler.bind(this, "lower")}
 						>
-							-
+							<Ionicons name="md-remove" size={24} color="white" />
 						</PrimaryButton>
 					</View>
 					<View style={styles.buttonContainer}>
 						<PrimaryButton
 							onPressHandler={nextGuessHandler.bind(this, "greater")}
 						>
-							+
+							<Ionicons name="md-add" size={24} color="white" />
 						</PrimaryButton>
 					</View>
-				</View>
-			</View>
+				</ButtonWrapper>
+			</Card>
 		</>
 	);
 };
 
 const styles = StyleSheet.create({
-	inputContainer: {
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-		padding: 16,
-		marginTop: 50,
-		marginHorizontal: 48,
-		borderRadius: 8,
-		backgroundColor: "#3b021f",
-		elevation: 10,
-		shadowColor: "black",
-		shadowOffset: { width: 0, height: 4 },
-		shadowRadius: 6,
-		shadowOpacity: 1,
-	},
 	highlow: {
 		color: "#ddb52f",
 		fontSize: 20,
@@ -106,16 +94,9 @@ const styles = StyleSheet.create({
 		borderRadius: 4,
 		paddingVertical: 20,
 		marginTop: 30,
-		// paddingHorizontal: 50,
 	},
 	guessedNumberText: { color: "#ddb52f", fontSize: 30, alignSelf: "center" },
-	buttonsContainer: {
-		display: "flex",
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "center",
-		marginTop: 10,
-	},
+
 	buttonContainer: {
 		flex: 1,
 	},
