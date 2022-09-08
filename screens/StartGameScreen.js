@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { TextInput, View, StyleSheet, Alert } from "react-native";
+import { useState, useEffect } from "react";
+import { TextInput, View, StyleSheet, Alert, Text } from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
+import Title from "../components/ui/Title";
 
-const StartGameScreen = ({ onPickNumber }) => {
+const StartGameScreen = ({ onPickNumber, changeGameState }) => {
 	const [inputVal, setInputVal] = useState("");
 
 	const handleChange = (enteredText) => {
@@ -27,26 +28,34 @@ const StartGameScreen = ({ onPickNumber }) => {
 	};
 
 	return (
-		<View style={styles.inputContainer}>
-			<TextInput
-				maxLength={2}
-				autoCapitalize="none"
-				autoCorrect={false}
-				keyboardType="number-pad"
-				textContentType="number"
-				value={inputVal}
-				style={styles.numberInput}
-				onChangeText={handleChange}
-			/>
-			<View style={styles.buttonsContainer}>
-				<View style={styles.buttonContainer}>
-					<PrimaryButton onPressHandler={handleReset}>Reset</PrimaryButton>
-				</View>
-				<View style={styles.buttonContainer}>
-					<PrimaryButton onPressHandler={handleConfirm}>Confirm</PrimaryButton>
+		<>
+			<View style={styles.title}>
+				<Text style={styles.text}>Guess The Number</Text>
+			</View>
+			<View style={styles.inputContainer}>
+				<Text style={styles.text}>Enter a Number</Text>
+				<TextInput
+					maxLength={2}
+					autoCapitalize="none"
+					autoCorrect={false}
+					keyboardType="number-pad"
+					textContentType="number"
+					value={inputVal}
+					style={styles.numberInput}
+					onChangeText={handleChange}
+				/>
+				<View style={styles.buttonsContainer}>
+					<View style={styles.buttonContainer}>
+						<PrimaryButton onPressHandler={handleReset}>Reset</PrimaryButton>
+					</View>
+					<View style={styles.buttonContainer}>
+						<PrimaryButton onPressHandler={handleConfirm}>
+							Confirm
+						</PrimaryButton>
+					</View>
 				</View>
 			</View>
-		</View>
+		</>
 	);
 };
 
@@ -56,7 +65,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		padding: 16,
-		marginTop: 100,
+		marginTop: 50,
 		marginHorizontal: 24,
 		borderRadius: 8,
 		backgroundColor: "#3b021f",
@@ -65,6 +74,18 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height: 4 },
 		shadowRadius: 6,
 		shadowOpacity: 1,
+	},
+	title: {
+		borderWidth: 3,
+		borderColor: "white",
+		marginHorizontal: 54,
+		marginTop: 120,
+		paddingVertical: 16,
+	},
+	text: {
+		color: "white",
+		alignSelf: "center",
+		fontSize: 24,
 	},
 	numberInput: {
 		height: 50,

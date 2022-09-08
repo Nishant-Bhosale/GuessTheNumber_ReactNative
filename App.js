@@ -2,19 +2,37 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ImageBackground, StyleSheet, SafeAreaView } from "react-native";
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
+import GameOverScreen from "./screens/GameOverScreen";
 import { useState } from "react";
 
 export default function App() {
 	const [userNumber, setUserNumber] = useState();
+	const [isGameOver, setIsGameOver] = useState(true);
 
 	const pickedNumberHandler = (number) => {
 		setUserNumber(number);
+		setIsGameOver(false);
 	};
 
-	let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
+	const changeGameState = () => {
+		setIsGameOver((prev) => !prev);
+	};
+
+	let screen = (
+		<StartGameScreen
+			onPickNumber={pickedNumberHandler}
+			changeGameState={changeGameState}
+		/>
+	);
 
 	if (userNumber) {
-		screen = <GameScreen enteredNum={userNumber} />;
+		screen = (
+			<GameScreen enteredNum={userNumber} changeGameState={changeGameState} />
+		);
+	}
+
+	if (isGameOver && userNumber) {
+		screen = <GameOverScreen changeGameState={changeGameState} />;
 	}
 
 	return (
