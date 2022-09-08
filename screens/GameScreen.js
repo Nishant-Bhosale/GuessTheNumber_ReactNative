@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
 	highlow: {
 		color: "#ddb52f",
 		fontSize: 20,
+		fontFamily: "open-sans",
 	},
 	guessedNumber: {
 		borderWidth: 3,
@@ -95,8 +96,12 @@ const styles = StyleSheet.create({
 		paddingVertical: 20,
 		marginTop: 30,
 	},
-	guessedNumberText: { color: "#ddb52f", fontSize: 30, alignSelf: "center" },
-
+	guessedNumberText: {
+		color: "#ddb52f",
+		fontSize: 30,
+		alignSelf: "center",
+		fontFamily: "open-sans",
+	},
 	buttonContainer: {
 		flex: 1,
 	},

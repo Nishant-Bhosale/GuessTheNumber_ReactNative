@@ -1,17 +1,18 @@
-import { Text, StyleSheet, View, ImageBackground } from "react-native";
+import { Text, StyleSheet, View, Image } from "react-native";
 const GameOverScreen = () => {
 	return (
-		<>
+		<View>
 			<View style={styles.title}>
 				<Text style={styles.text}>GAME OVER!</Text>
 			</View>
 			<View style={styles.gameOverImageContainer}>
-				<ImageBackground
+				<Image
 					source={require("../assets/images/success.png")}
-					resizeMode="cover"
+					style={styles.image}
 				/>
 			</View>
-		</>
+			<Text>Your phone needed X rounds to guess the number Y.</Text>
+		</View>
 	);
 };
 
@@ -27,14 +28,20 @@ const styles = StyleSheet.create({
 		color: "white",
 		alignSelf: "center",
 		fontSize: 24,
+		fontFamily: "open-sans-bold",
 	},
 	gameOverImageContainer: {
 		marginTop: 50,
 		alignSelf: "center",
-		borderWidth: 2,
+		borderWidth: 4,
 		height: 300,
 		width: 300,
+		overflow: "hidden",
 		borderRadius: 300 / 2,
+	},
+	image: {
+		height: "100%",
+		width: "100%",
 	},
 });
 
