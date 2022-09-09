@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Alert } from "react-native";
+import { View, StyleSheet, Text, Alert, FlatList } from "react-native";
 import NumberContainer from "../components/game/NumberContainer";
 import ButtonWrapper from "../components/ui/ButtonWrapper";
 import { Ionicons } from "@expo/vector-icons";
 import Card from "../components/ui/Card";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
+import GuessLogItem from "../components/ui/GuessLogItem";
 
 const generateRandomNumber = (min, max, exclude) => {
 	const rndNumber = Math.floor(Math.random() * (max - min)) + min;
@@ -20,9 +21,14 @@ const generateRandomNumber = (min, max, exclude) => {
 let minBoundary = 1,
 	maxBoundary = 100;
 
-const GameScreen = ({ enteredNum, changeGameState }) => {
+const GameScreen = ({
+	enteredNum,
+	changeGameState,
+	updateNumOfRounds,
+	roundNumber,
+}) => {
 	const initialGuess = generateRandomNumber(1, 100, enteredNum);
-
+	const [guessRounds, setGuessRounds] = useState([]);
 	const [currentGuess, setCurrentGuess] = useState(initialGuess);
 
 	useEffect(() => {
@@ -30,6 +36,11 @@ const GameScreen = ({ enteredNum, changeGameState }) => {
 			changeGameState();
 		}
 	}, [currentGuess, changeGameState, enteredNum]);
+
+	useEffect(() => {
+		minBoundary = 1;
+		maxBoundary = 100;
+	}, []);
 
 	function nextGuessHandler(direction) {
 		if (
@@ -54,6 +65,11 @@ const GameScreen = ({ enteredNum, changeGameState }) => {
 			currentGuess,
 		);
 		setCurrentGuess(newRndNumber);
+		updateNumOfRounds();
+		setGuessRounds((prev) => [
+			{ num: newRndNumber, roundNum: roundNumber + 1 },
+			...prev,
+		]);
 	}
 	return (
 		<>
@@ -78,6 +94,18 @@ const GameScreen = ({ enteredNum, changeGameState }) => {
 					</View>
 				</ButtonWrapper>
 			</Card>
+			<View style={styles.listContainer}>
+				<FlatList
+					data={guessRounds}
+					renderItem={(items) => (
+						<GuessLogItem
+							guess={items.item.num}
+							roundNumber={items.item.roundNum}
+						/>
+					)}
+					keyExtractor={(item) => item.num}
+				/>
+			</View>
 		</>
 	);
 };
@@ -104,6 +132,11 @@ const styles = StyleSheet.create({
 	},
 	buttonContainer: {
 		flex: 1,
+	},
+	listContainer: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
 	},
 });
 

@@ -10,6 +10,7 @@ import { useState } from "react";
 export default function App() {
 	const [userNumber, setUserNumber] = useState();
 	const [isGameOver, setIsGameOver] = useState(true);
+	const [numOfRounds, setNumOfRounds] = useState(0);
 
 	const [fontsLoaded] = useFonts({
 		"open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
@@ -19,9 +20,20 @@ export default function App() {
 	if (!fontsLoaded) {
 		return <AppLoading />;
 	}
+
 	const pickedNumberHandler = (number) => {
 		setUserNumber(number);
 		setIsGameOver(false);
+	};
+
+	const updateNumOfRounds = () => {
+		setNumOfRounds((prev) => (prev += 1));
+	};
+
+	const startNewGame = () => {
+		setUserNumber(0);
+		changeGameState();
+		setNumOfRounds(0);
 	};
 
 	const changeGameState = () => {
@@ -37,12 +49,24 @@ export default function App() {
 
 	if (userNumber) {
 		screen = (
-			<GameScreen enteredNum={userNumber} changeGameState={changeGameState} />
+			<GameScreen
+				enteredNum={userNumber}
+				changeGameState={changeGameState}
+				updateNumOfRounds={updateNumOfRounds}
+				roundNumber={numOfRounds}
+			/>
 		);
 	}
 
 	if (isGameOver && userNumber) {
-		screen = <GameOverScreen changeGameState={changeGameState} />;
+		screen = (
+			<GameOverScreen
+				changeGameState={changeGameState}
+				startNewGame={startNewGame}
+				userNumber={userNumber}
+				roundsNumber={numOfRounds}
+			/>
+		);
 	}
 
 	return (
